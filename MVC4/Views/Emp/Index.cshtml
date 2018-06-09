@@ -1,0 +1,82 @@
+﻿@model IEnumerable<MVC4.Models.Employee>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<table>
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>City</td>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.City</td>
+                    <td><a href="javascript:void(0);" onclick="popup(@item.Id)">Update</a></td>
+                    <td><a href="~/Emp/Update/@item.Id">Update</a></td>
+                </tr>
+            }
+        }
+
+    </tbody>
+
+
+
+</table>
+ @*Trigger the modal with a button 
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>*@
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update Employee</h4>
+            </div>
+            <div class="modal-body" id="ModelContent">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    function popup(value) {
+        $.ajax({
+            url:"Update/"+value,
+            type: "GET",
+            contentType:"application/json; charset=utf-8",
+            datatype:"json",
+            success: function(data)
+            {
+                $('#ModelContent').html(data);
+                $('#myModal').modal('show');
+            },
+            error: function () {
+                alert("Content load failed.");
+            }
+        });
+
+    }
+</script>
+

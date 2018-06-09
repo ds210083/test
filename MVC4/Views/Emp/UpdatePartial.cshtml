@@ -1,0 +1,15 @@
+﻿@model MVC4.Models.Employee
+
+
+<form method="post">
+    <input type="text" name="Name" value="@Model.Name" /><br />
+    <input type="text" name="City" value="@Model.City" /><br />
+    <input type="submit" name="Save" value="Save" />
+</form>
+<p>
+    @if (ViewBag.Ispost != null && ViewBag.Ispost)
+    {
+        // If the form was submitted
+        @ViewBag.Message
+    }
+</p>
